@@ -1,6 +1,5 @@
 # Sign up News Letter
-
-This is Node.js and Express.js practice.
+This is a news letter subsctiion Sign up app using Node.js, Express.js, mailchimp API and Bootstrap5.
 
 ## Final Product
 
