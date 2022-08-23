@@ -4,15 +4,16 @@ import { dirname } from 'path';
 import bodyParser from "body-parser";
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static("public"))
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 
-// app.get("/", (req, res) => {
-  
-// })
+app.get("/", (req, res) => {
+  res.sendFile(`${__dirname}/signup.html`);
+})
 
 // app.post("/index.html", (req, res) => {
 
