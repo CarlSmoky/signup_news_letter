@@ -1,5 +1,5 @@
 import express from 'express';
-import https from "node:https";import { fileURLToPath } from 'url';
+import https from "node:https"; import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import bodyParser from "body-parser";
 
@@ -15,9 +15,17 @@ app.get("/", (req, res) => {
   res.sendFile(`${__dirname}/signup.html`);
 })
 
-// app.post("/index.html", (req, res) => {
+app.post("/", (req, res) => {
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  console.log(firstName, lastName, email);
 
-// })
+  res.write(`<h1>Name is ${firstName} ${lastName}</h1>`);
+  res.write(`<h2>${email}</h2>`);
+
+  res.send();
+})
 
 
 
