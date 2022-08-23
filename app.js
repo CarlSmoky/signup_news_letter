@@ -2,6 +2,7 @@ import express from 'express';
 import https from "node:https"; import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import bodyParser from "body-parser";
+import 'dotenv/config';
 
 const app = express();
 app.use(express.static("public"))
@@ -19,13 +20,41 @@ app.post("/", (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  console.log(firstName, lastName, email);
+  const data = {
+    members: [
+      {
+        email_address: email,
+        status: "subscribed",
+        merge_field: {
+          FNAME: firstName,
+          LNAME: lastName,
+        }
+      }
+    ]
+  };
+  const jsonData = JSON.stringify(data);
 
-  res.write(`<h1>Name is ${firstName} ${lastName}</h1>`);
-  res.write(`<h2>${email}</h2>`);
+  const API_SERVER = `us13`;
+  const url = `https://${API_SERVER}.api.mailchimp.com/3.0/lists/${process.env.LIST_ID}`;
+  const options = {
+    method: "POST",
+    auth: `kaoru:${process.env.API_KEY}`
+  }
+  console.log(options.auth);
 
-  res.send();
-})
+  
+  
+  const request = https.request(url, options, (response) => {
+    response.on("data", data => {
+      console.log(JSON.parse(data));
+    })
+  })
+
+  request.write(jsonData);
+  request.end();
+  
+});
+
 
 
 
