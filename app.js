@@ -1,16 +1,16 @@
 import express from 'express';
-import https from "node:https"; import { fileURLToPath } from 'url';
+import https from "node:https";
+import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import bodyParser from "body-parser";
 import 'dotenv/config';
 
 const app = express();
-app.use(express.static("public"))
-app.use(bodyParser.urlencoded({ extended: true }));
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+app.use(express.static("public"))
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.sendFile(`${__dirname}/signup.html`);
@@ -61,9 +61,6 @@ app.post("/", (req, res) => {
 app.post('/failure', (req, res) => {
   res.sendFile(`${__dirname}/signup.html`)
 })
-
-
-
 
 app.listen(3001, (req, res) => {
   console.log("I'm listening 3001");
